@@ -176,10 +176,6 @@ img {display: block; }
   color: #fff;
 }
 
-.searchbtn:focus-visible {
-  outline: 3px solid #6c3bff;
-  border-radius: 12px;
-}
 
 .explore {
   display: block;
@@ -200,7 +196,8 @@ img {display: block; }
   background: url("./assets/horseshoe-sky.jpg");
   background-size: cover;
   background-position: center 60%;
-  background-repeat: no repeat;
+  background-repeat: no-repeat;
+
 }
 
 #page2Hero::after{
@@ -321,6 +318,43 @@ img {display: block; }
   letter-spacing: 1px;
 }
 
+/* === RESULT GRID LAYOUT === */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.destination-card {
+  padding: 16px 20px;     
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.results-message {
+  margin-top: 24px;
+  font-size: 1rem;
+  text-align: center;
+  color: #555;
+}
+
+.grid .card {
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
 
 @media (max-width: 1024px) {
  
@@ -391,3 +425,4 @@ img {display: block; }
     font-size: 18px;
   }
 }
+

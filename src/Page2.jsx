@@ -98,6 +98,12 @@ function Page2() {
       })
     : allDestinations;
 
+  // show "no results" once data is loaded and user has typed something
+  const noResults =
+    allDestinations.length > 0 &&
+    filter.trim().length > 0 &&
+    filtered.length === 0;
+
   function handleSubmit(e) {
     // keep the page from reloading, filtering is live as you type
     e.preventDefault();
@@ -178,6 +184,13 @@ function Page2() {
         <div id="status" aria-live="polite">
           {status}
         </div>
+
+        {noResults && (
+          <p className="results-message">
+            No results found for "{filter}". Please try another destination or
+            spelling.
+          </p>
+        )}
 
         <div id="destGrid" className="grid">
           {filtered.slice(0, 6).map((it) => {
