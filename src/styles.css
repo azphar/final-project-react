@@ -235,18 +235,19 @@ img {display: block; }
   font-size: clamp(32px, 5.4vw, 64px);  /* responsive like the example */
 }
 
-/* ===== Page-2 specific header tweaks (overrides) ===== */
-.page2 #siteHeader{
-  position: absolute;                /* float header over the photo */
-  top: 0; left: 0; right: 0;
-  background: transparent;           /* no solid bar */
+.page2 #siteHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
   z-index: 10;
 }
 
-/* smaller logo on the photo so it doesn’t dominate */
+
 .page2 #siteLogo{ height: 80px; }
 
-/* light text & button on dark photo */
+
 .page2 #mainNav ul li a{ color: #fff; }
 .page2 #mainNav ul li a:hover{ color: #d6ccff; }
 

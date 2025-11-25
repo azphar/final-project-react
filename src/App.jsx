@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Page2 from "./Page2.jsx";
+import CountryDetails from "./CountryDetails.jsx";
 
 function HomePage() {
   return (
@@ -89,9 +90,9 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/find" element={<Page2 />} />
+      <Route path="/country/:code" element={<CountryDetails />} />
     </Routes>
   );
 }
 
 export default App;
-;
