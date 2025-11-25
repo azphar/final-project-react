@@ -39,7 +39,7 @@ function HomePage() {
       <main>
         <section id="heroSearch">
           <div className="hero-search">
-            <h2 className="hero-search_title">
+            <h2 className="hero-search__title">
               We <span className="purple">SEEK</span> far &amp; wide to{" "}
               <span className="purple">FIND</span> your kind of paradise
             </h2>
