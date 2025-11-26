@@ -1,4 +1,3 @@
-// src/Page2.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

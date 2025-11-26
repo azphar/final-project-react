@@ -185,7 +185,6 @@ img {display: block; }
   margin: 24px auto;
 }
 
-/* Page 2 hero */
 #page2Hero{
   position: relative;
   min-height: clamp(320px, 38vw, 560px);
@@ -223,9 +222,9 @@ img {display: block; }
 }
 
 #page2Hero .hero__inner{
-  position: relative;                /* sit above the overlay */
+  position: relative;                
   z-index: 1;
-  padding: 72px 0;                   /* breathing room inside hero */
+  padding: 72px 0;                   
 }
 
 .hero-title{
@@ -233,7 +232,7 @@ img {display: block; }
   font-weight: 900;
   letter-spacing: .02em;
   line-height: 1.15;
-  font-size: clamp(32px, 5.4vw, 64px);  /* responsive like the example */
+  font-size: clamp(32px, 5.4vw, 64px);  
 }
 
 .page2 #siteHeader {
@@ -435,4 +434,57 @@ img {display: block; }
     font-size: 18px;
   }
 }
+
+/* ===== MOBILE FIX FOR /find ===== */
+@media (max-width: 600px) {
+  #siteHeader {
+    position: static !important;
+  }
+
+  #page2Hero {
+    padding: 5rem 1.25rem 2.5rem;
+    background-position: center;
+  }
+
+  .searchrow.searchrow--hero {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .searchbar {
+    width: 100%;
+  }
+
+  .searchbar input {
+    width: 100%;
+  }
+
+  .searchbtn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  #headerWrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  #contactBtn {
+    position: static;
+    margin-top: 0.5rem;
+  }
+
+  #page2Hero {
+    padding-top: 4.5rem;
+  }
+}
+
 
