@@ -435,8 +435,8 @@ img {display: block; }
   }
 }
 
-/* ===== MOBILE FIX FOR /find ===== */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
   #siteHeader {
     position: static !important;
   }
