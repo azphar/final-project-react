@@ -37,6 +37,8 @@ function Page2() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // API CALL + ERROR HANDLING in useEffect:
+  // Fetch all countries once when the component mounts.
   useEffect(() => {
     async function fetchAllDestinations() {
       try {
@@ -77,17 +79,19 @@ function Page2() {
     }
 
     fetchAllDestinations();
-  }, []);
+  }, []); // runs once on mount
 
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-
+  // Read ?q= from the URL (e.g. /find?q=japan) and sync it into the search box.
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const q = params.get("q") || "";
     setFilter(q);
   }, [location.search]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Filtering is client-side only; no new API call here.
+  }
 
   const normalizedFilter = filter.trim().toLowerCase();
 
