@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LOCAL_PHOTOS = {
   NZL: "/assets/destinations/new-zealand.jpg",
