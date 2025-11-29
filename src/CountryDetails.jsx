@@ -10,9 +10,7 @@ function CountryDetails() {
     async function fetchDetails() {
       try {
         setStatus("Loading…");
-        const res = await fetch(
-          `https://restcountries.com/v3.1/alpha/${code}`
-        );
+        const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
@@ -39,11 +37,7 @@ function CountryDetails() {
     <div className="page2">
       <header id="siteHeader">
         <div id="headerWrapper">
-          <a
-            href="/"
-            id="logoLink"
-            aria-label="Seek & Find Adventure - Home"
-          >
+          <a href="/" id="logoLink" aria-label="Seek & Find Adventure - Home">
             <img
               src="/assets/fulllogo_transparent.png?v=1"
               alt="Seek & Find Adventure"
@@ -68,8 +62,10 @@ function CountryDetails() {
         </div>
       </header>
 
-      <main className="container" style={{ paddingTop: "160px", paddingBottom: "80px" }}>
-
+      <main
+        className="container"
+        style={{ paddingTop: "160px", paddingBottom: "80px" }}
+      >
         <Link to="/find" style={{ display: "inline-block", marginBottom: 16 }}>
           ← Back to search results
         </Link>
@@ -82,17 +78,24 @@ function CountryDetails() {
           style={{ maxWidth: "320px", margin: "16px 0" }}
         />
 
-        <p><strong>Official name:</strong> {country.name?.official}</p>
-        <p><strong>Capital:</strong> {country.capital?.[0] || "—"}</p>
-        <p><strong>Region:</strong> {country.region}</p>
-        <p><strong>Subregion:</strong> {country.subregion || "—"}</p>
+        <p>
+          <strong>Official name:</strong> {country.name?.official}
+        </p>
+        <p>
+          <strong>Capital:</strong> {country.capital?.[0] || "—"}
+        </p>
+        <p>
+          <strong>Region:</strong> {country.region}
+        </p>
+        <p>
+          <strong>Subregion:</strong> {country.subregion || "—"}
+        </p>
         <p>
           <strong>Population:</strong>{" "}
           {country.population?.toLocaleString("en-US")}
         </p>
         <p>
-          <strong>Timezones:</strong>{" "}
-          {country.timezones?.join(", ") || "—"}
+          <strong>Timezones:</strong> {country.timezones?.join(", ") || "—"}
         </p>
       </main>
     </div>
@@ -100,4 +103,3 @@ function CountryDetails() {
 }
 
 export default CountryDetails;
-

@@ -36,104 +36,69 @@ function Page2() {
 
   const navigate = useNavigate();
 
-  // fetch your 6 default countries
-  async function fetchInitialDestinations() {
-    setStatus("Loading destinations…");
-
-    const codes = ["fji", "mdv", "nzl", "nld", "kna", "pan"];
-    const url = `https://restcountries.com/v3.1/alpha?codes=${codes.join(
-      ","
-    )}&fields=name,flags,capital,region,subregion,cca3`;
-
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-      const mapped = data.map((c) => {
-        const code = (c.cca3 || "").toUpperCase();
-        return {
-          id: code,
-          name: c.name?.common ?? "Unknown",
-          capital: Array.isArray(c.capital) ? c.capital[0] : c.capital ?? "—",
-          region: c.region ?? "—",
-          subregion: c.subregion ?? "",
-          flag: (c.flags && (c.flags.svg || c.flags.png)) || "",
-          photoLocal: LOCAL_PHOTOS[code] || null,
-          price: PRICE_MAP[code] ?? null,
-        };
-      });
-
-      setAllDestinations(mapped);
-      setStatus("Search Results");
-    } catch (e) {
-      console.error(e);
-      setStatus("Failed to load. Please try again.");
-      setAllDestinations([]);
-    }
-  }
-
-  // search the API by name (Japan, Brazil, etc.)
-  async function searchByName(term) {
-    const trimmed = term.trim();
-    if (!trimmed) return;
-
-    setStatus("Searching…");
-
-    try {
-      const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(
-        trimmed
-      )}?fields=name,flags,capital,region,subregion,cca3`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-      const mapped = data.map((c) => {
-        const code = (c.cca3 || "").toUpperCase();
-        return {
-          id: code,
-          name: c.name?.common ?? "Unknown",
-          capital: Array.isArray(c.capital) ? c.capital[0] : c.capital ?? "—",
-          region: c.region ?? "—",
-          subregion: c.subregion ?? "",
-          flag: (c.flags && (c.flags.svg || c.flags.png)) || "",
-          photoLocal: LOCAL_PHOTOS[code] || null,
-          price: PRICE_MAP[code] ?? null,
-        };
-      });
-
-      setAllDestinations(mapped);
-      setStatus("Search Results");
-    } catch (err) {
-      console.error(err);
-      setAllDestinations([]);
-      setStatus("No matches found");
-    }
-  }
-
-  // On first load, read ?q= and either search or load defaults
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const qParam = (params.get("q") || "").trim();
+    async function fetchAllDestinations() {
+      try {
+        setStatus("Loading destinations…");
+        const res = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,flags,capital,region,subregion,cca3"
+        );
+        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
 
-    if (qParam) {
-      setFilter(qParam);
-      searchByName(qParam);
-    } else {
-      fetchInitialDestinations();
+        const data = await res.json();
+
+        const mapped = data.map((c) => {
+          const code = (c.cca3 || "").toUpperCase();
+          return {
+            id: code,
+            name: c.name?.common ?? "Unknown",
+            capital: Array.isArray(c.capital) ? c.capital[0] : c.capital ?? "—",
+            region: c.region ?? "—",
+            subregion: c.subregion ?? "",
+            flag: (c.flags && (c.flags.svg || c.flags.png)) || "",
+            photoLocal: LOCAL_PHOTOS[code] || null,
+            price: PRICE_MAP[code] ?? null,
+          };
+        });
+
+        mapped.sort((a, b) => a.name.localeCompare(b.name));
+        setAllDestinations(mapped);
+        setStatus("Search Results");
+      } catch (err) {
+        console.error("Failed to load destinations:", err);
+        setAllDestinations([]);
+        setStatus("Failed to load destinations. Please refresh and try again.");
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    fetchAllDestinations();
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    searchByName(filter);
   }
 
+  const normalizedFilter = filter.trim().toLowerCase();
+
+  const filteredDestinations =
+    normalizedFilter.length === 0
+      ? allDestinations
+      : allDestinations.filter((it) => {
+          const haystacks = [
+            it.name,
+            it.capital,
+            it.region,
+            it.subregion,
+          ]
+            .filter(Boolean)
+            .map((v) => v.toLowerCase());
+          return haystacks.some((text) => text.includes(normalizedFilter));
+        });
+
   const noResults =
-    filter.trim().length > 0 &&
-    allDestinations.length === 0 &&
-    status === "No matches found";
+    normalizedFilter.length > 0 &&
+    filteredDestinations.length === 0 &&
+    !status.startsWith("Failed");
 
   return (
     <div className="page2">
@@ -211,8 +176,8 @@ function Page2() {
         )}
 
         <div id="destGrid" className="grid">
-          {allDestinations.slice(0, 6).map((it) => {
-            const src = it.photoLocal || it.photo || it.flag || "";
+          {filteredDestinations.map((it) => {
+            const src = it.photoLocal || it.flag || "";
             return (
               <article
                 className="card"
@@ -244,3 +209,4 @@ function Page2() {
 }
 
 export default Page2;
+
