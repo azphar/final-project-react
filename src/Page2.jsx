@@ -35,22 +35,17 @@ function Page2() {
   const [filter, setFilter] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    // useEffect HOOK:
-    // Run the API request once when the component mounts.
     async function fetchAllDestinations() {
       try {
         setStatus("Loading destinations…");
 
-        // API CALL:
-        // Use fetch() to request data from the REST Countries endpoint.
         const res = await fetch(
           "https://restcountries.com/v3.1/all?fields=name,flags,capital,region,subregion,cca3"
         );
 
-        // ERROR HANDLING:
-        // If the response is not OK, throw an error so we can catch it below.
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`);
         }
@@ -75,7 +70,6 @@ function Page2() {
         setAllDestinations(mapped);
         setStatus("Search Results");
       } catch (err) {
-        // Log the error for debugging and show a friendly message.
         console.error("Failed to load destinations:", err);
         setAllDestinations([]);
         setStatus("Failed to load destinations. Please refresh and try again.");
@@ -83,12 +77,17 @@ function Page2() {
     }
 
     fetchAllDestinations();
-  }, []); // dependency array so it runs only once on mount
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    // We filter client-side, so no extra API call is needed on submit.
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q") || "";
+    setFilter(q);
+  }, [location.search]);
 
   const normalizedFilter = filter.trim().toLowerCase();
 
@@ -216,5 +215,3 @@ function Page2() {
 }
 
 export default Page2;
-
-
