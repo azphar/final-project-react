@@ -37,13 +37,23 @@ function Page2() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // useEffect HOOK:
+    // Run the API request once when the component mounts.
     async function fetchAllDestinations() {
       try {
         setStatus("Loading destinations…");
+
+        // API CALL:
+        // Use fetch() to request data from the REST Countries endpoint.
         const res = await fetch(
           "https://restcountries.com/v3.1/all?fields=name,flags,capital,region,subregion,cca3"
         );
-        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+
+        // ERROR HANDLING:
+        // If the response is not OK, throw an error so we can catch it below.
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
 
         const data = await res.json();
 
@@ -65,6 +75,7 @@ function Page2() {
         setAllDestinations(mapped);
         setStatus("Search Results");
       } catch (err) {
+        // Log the error for debugging and show a friendly message.
         console.error("Failed to load destinations:", err);
         setAllDestinations([]);
         setStatus("Failed to load destinations. Please refresh and try again.");
@@ -72,10 +83,11 @@ function Page2() {
     }
 
     fetchAllDestinations();
-  }, []);
+  }, []); // dependency array so it runs only once on mount
 
   function handleSubmit(e) {
     e.preventDefault();
+    // We filter client-side, so no extra API call is needed on submit.
   }
 
   const normalizedFilter = filter.trim().toLowerCase();
@@ -84,12 +96,7 @@ function Page2() {
     normalizedFilter.length === 0
       ? allDestinations
       : allDestinations.filter((it) => {
-          const haystacks = [
-            it.name,
-            it.capital,
-            it.region,
-            it.subregion,
-          ]
+          const haystacks = [it.name, it.capital, it.region, it.subregion]
             .filter(Boolean)
             .map((v) => v.toLowerCase());
           return haystacks.some((text) => text.includes(normalizedFilter));
@@ -209,4 +216,5 @@ function Page2() {
 }
 
 export default Page2;
+
 

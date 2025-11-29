@@ -7,11 +7,7 @@ function HomePage() {
     <>
       <header id="siteHeader">
         <div id="headerWrapper">
-          <a
-            href="/"
-            id="logoLink"
-            aria-label="Seek & Find Adventure - Home"
-          >
+          <a href="/" id="logoLink" aria-label="Seek & Find Adventure - Home">
             <img
               src="/assets/fulllogo_transparent.png?v=1"
               alt="Seek & Find Adventure"
@@ -43,15 +39,10 @@ function HomePage() {
               We <span className="purple">SEEK</span> far &amp; wide to{" "}
               <span className="purple">FIND</span> your kind of paradise
             </h2>
-            <p className="hero-search_subtitle">
-              Where would you like to go?
-            </p>
+            <p className="hero-search_subtitle">Where would you like to go?</p>
 
             <form className="searchrow" action="/find" method="GET">
-              <label
-                htmlFor="searchQuery"
-                className="sr-only"
-              >
+              <label htmlFor="searchQuery" className="sr-only">
                 Search by City, Country or Continent
               </label>
 
@@ -64,11 +55,7 @@ function HomePage() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="searchbtn"
-                aria-label="Search"
-              >
+              <button type="submit" className="searchbtn" aria-label="Search">
                 🔍
               </button>
             </form>

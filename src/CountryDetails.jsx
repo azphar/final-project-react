@@ -7,23 +7,32 @@ function CountryDetails() {
   const [status, setStatus] = useState("Loading…");
 
   useEffect(() => {
+    // useEffect HOOK:
+    // Fetch details whenever the :code param in the URL changes.
     async function fetchDetails() {
       try {
         setStatus("Loading…");
+
+        // API CALL:
+        // Use fetch() to get details for a single country by its alpha code.
         const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        // ERROR HANDLING:
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
 
         const data = await res.json();
         setCountry(data[0]);
         setStatus("Loaded");
       } catch (err) {
-        console.error(err);
+        console.error("Failed to load country details:", err);
         setStatus("Failed to load details");
       }
     }
 
     fetchDetails();
-  }, [code]);
+  }, [code]); // dependency so it re-runs if the route param changes
 
   if (!country) {
     return (
@@ -103,3 +112,4 @@ function CountryDetails() {
 }
 
 export default CountryDetails;
+
